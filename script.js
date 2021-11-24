@@ -101,13 +101,14 @@ c(".pizzaInfo--addButton").addEventListener('click', ()=>{
     closeModal();
 });
 
+//cart mobile
 c('.menu-openner').addEventListener('click', ()=>{
     if(cart.length > 0){
         c('aside').style.left = '0px'
-    }else{
-        c('aside').style.left = '100px'
-    }
-    
+    } 
+})
+c('.menu-closer').addEventListener('click', ()=>{
+    c('aside').style.left = '100vw'
 })
 
 function updateCart(){
@@ -171,6 +172,7 @@ function updateCart(){
         
     }else{
         c("aside").classList.remove('show');
+        c('aside').style.left = '100vw'
     }
 }
 

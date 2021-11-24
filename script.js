@@ -1,4 +1,7 @@
+let cart= [];
 let modalQt = 1;
+let modalKey = 0;
+
 
 const c = (e)=>document.querySelector(e);
 const cs = (e)=>document.querySelectorAll(e);
@@ -18,6 +21,7 @@ pizzaJson.map((item, index) => {
         e.preventDefault();
         let key = e.target.closest(".pizza-item").getAttribute('data-key');
         modalQt = 1;
+        modalKey = key;
 
         c(".pizzaBig img").src = pizzaJson[key].img;
         c(".pizzaInfo h1").innerHTML = pizzaJson[key].name;
@@ -31,7 +35,7 @@ pizzaJson.map((item, index) => {
             size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex]
         });
 
-        c(".pizzaInfo--qt").innerHTML = modalQt
+        c(".pizzaInfo--qt").innerHTML = modalQt;
 
         c(".pizzaWindowArea").style.opacity = 0;
         c(".pizzaWindowArea").style.display="flex";
@@ -54,3 +58,46 @@ closeModal = () => {
 cs(".pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton").forEach((item) =>{
     item.addEventListener("click", closeModal);
 })
+
+c(".pizzaInfo--qtmenos").addEventListener('click', ()=>{
+    if(modalQt > 1){
+        modalQt--;
+    c(".pizzaInfo--qt").innerHTML = modalQt;
+    }
+    
+} )
+
+c(".pizzaInfo--qtmais").addEventListener('click', ()=>{
+    modalQt++;
+    c(".pizzaInfo--qt").innerHTML = modalQt;
+} )
+
+cs(".pizzaInfo--size").forEach((size, sizeIndex)=>{
+    size.addEventListener('click', (e)=>{
+        c(".pizzaInfo--size.selected").classList.remove("selected");
+        size.classList.add("selected");    
+    })
+});
+
+c(".pizzaInfo--addButton").addEventListener('click', ()=>{
+    let size = parseInt(c(".pizzaInfo--size.selected").getAttribute('data-key'));
+
+    let identifier = pizzaJson[modalKey].id+"@"+size;
+
+    let key = cart.findIndex((item) => item.identifier == identifier);
+
+    if(key > -1){
+        cart[key].qt += modalQt;
+    }else{
+        cart.push({
+            identifier: identifier,
+            id: pizzaJson[modalKey].id,
+            size: size,
+            qt: modalQt
+        });
+    }
+
+    
+
+    closeModal();
+});

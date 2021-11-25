@@ -108,7 +108,7 @@ c('.menu-openner').addEventListener('click', ()=>{
     } 
 })
 c('.menu-closer').addEventListener('click', ()=>{
-    c('aside').style.left = '100vw'
+    c('aside').style.left = '100vw';
 })
 
 function updateCart(){
@@ -172,7 +172,7 @@ function updateCart(){
         
     }else{
         c("aside").classList.remove('show');
-        c('aside').style.left = '100vw'
+        c('aside').style.left = '100vw';
     }
 }
 
